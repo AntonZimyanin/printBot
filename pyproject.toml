@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "printbot"
+version = "0.1.0"
+description = ""
+authors = ["AntonZimyanin <zimyanin88@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^3.0.0"
+pydantic = "^2.3.0"
+sqlalchemy = "^2.0.20"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
