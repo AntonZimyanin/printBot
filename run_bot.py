@@ -10,6 +10,9 @@ from bot.printBot import bot
 
 
 async def main(bot: Bot): 
+
+    asyncio.get_running_loop()
+    
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
