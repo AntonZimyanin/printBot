@@ -3,4 +3,5 @@
 .venv
 *.db
 *.sqlite
+config.json
 __pycache__
