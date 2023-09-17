@@ -5,8 +5,11 @@ from aiogram import Bot
 from aiogram import Dispatcher
 
 from bot import change_settings
-from bot import printBot
-from bot.printBot import bot
+from bot import print_bot
+from bot import user_bot
+from bot.filters.chat_type import ChatTypeFilter
+
+from aiogram.enums import ChatType
 
 
 async def main(bot: Bot):
@@ -20,11 +23,17 @@ async def main(bot: Bot):
 
     dp = Dispatcher()
 
-    dp.include_router(router=printBot.router)
+    print_bot.router.message.filter(ChatTypeFilter(chat_type=["group", "supergroup"]))
+    user_bot.router.message.filter(ChatTypeFilter(chat_type=["private"]))
+    change_settings.router.message.filter(ChatTypeFilter(chat_type=["private"]))
+
+    dp.include_router(router=print_bot.router)
     dp.include_router(router=change_settings.router)
+    dp.include_router(router=user_bot.router)
+
 
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
 if __name__ == "__main__":
-    asyncio.run(main(bot=bot))
+    asyncio.run(main(bot=print_bot.bot))
