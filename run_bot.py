@@ -7,9 +7,8 @@ from aiogram import Dispatcher
 from bot import change_settings
 from bot import print_bot
 from bot import user_bot
+from bot.print_bot import bot
 from bot.filters.chat_type import ChatTypeFilter
-
-from aiogram.enums import ChatType
 
 
 async def main(bot: Bot):
