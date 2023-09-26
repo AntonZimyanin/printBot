@@ -1,12 +1,9 @@
-from aiogram import Bot
 from aiogram import F
 from aiogram import Router
 from aiogram.types import Message
 
+from bot.bot_object import bot
 from bot.config_data import config_dict
-
-
-bot = Bot(config_dict["bot_token"])
 
 router = Router(name="print_router")
 

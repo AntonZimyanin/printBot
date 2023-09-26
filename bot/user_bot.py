@@ -3,7 +3,7 @@ from aiogram import Router
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart   
 
-from bot.keyboards.user_kb import get_user_kb
+from bot.keyboards.user_kb import get_user_kb, get_start_kb
 
 
 router = Router(name="user_router")
@@ -14,9 +14,17 @@ async def command_start(message: Message):
     await message.answer(
         """
 Welcome to the printBot.
-Частые вопросы:                             
+Что вас интересует?
 """,
-        reply_markup=get_user_kb()
+        reply_markup=get_start_kb()
+    )
+
+
+#"Общая информация"
+@router.callback_query(F.data == "Общая информация")
+async def general_data(callback: CallbackQuery):
+    await callback.message.answer(
+        "Общая информация", reply_markup=get_user_kb()
     )
 
 
@@ -31,4 +39,11 @@ async def send_location(callback: CallbackQuery):
 async def send_price(callback: CallbackQuery):
     await callback.message.answer(
         "Цена печати одного листа — 20коп."
+    )
+
+
+@router.callback_query(F.data == "Можно ли прийти с флешкой?")
+async def can_bring_flash(callback: CallbackQuery):
+    await callback.message.answer(
+        "Да, можно, главное — не Dead Drops)"
     )
