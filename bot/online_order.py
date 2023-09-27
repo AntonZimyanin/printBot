@@ -1,11 +1,12 @@
 from aiogram import F
 from aiogram import Router
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
 from bot.bot_object import bot
 from bot.config_data import config_dict
 from bot.keyboards.print_type_kb import get_print_type_kb
+from bot.keyboards.make_order_kb import get_online_order_kb
 from bot.state import File
 
 
@@ -34,26 +35,12 @@ async def send_print_type(callback: CallbackQuery, state: FSMContext):
     await state.set_state(File.file)
 
 
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
-
 @router.message(File.file, F.content_type.in_({'document', 'photo'}))
 async def send_file(message: Message, state: FSMContext):
-
-    kb = [
-        [
-            KeyboardButton(text="cделать заказ", ),
-        ],
-    ]
-
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=kb,
-        resize_keyboard=True,
-    )
-
-    await message.copy_to(chat_id=config_dict["admin_id"], reply_markup=keyboard)
+    await message.copy_to(chat_id=config_dict["admin_id"], reply_markup=get_online_order_kb())
 
 
-@router.message(F.text.lower() == "cделать заказ")
+@router.message(F.text.lower() == "Cделать заказ")
 async def state_clear(message: Message, state: FSMContext):
     await message.answer("""
 Заказ отправлен, вам напишут, когда его забрать.

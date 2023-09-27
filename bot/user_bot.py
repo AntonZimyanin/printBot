@@ -13,7 +13,7 @@ router = Router(name="user_router")
 async def command_start(message: Message):
     await message.answer(
         """
-Welcome to the printBot.
+Привет \U0001F64B,
 Что вас интересует?
 """,
         reply_markup=get_start_kb()
