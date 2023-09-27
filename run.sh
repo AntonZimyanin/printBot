@@ -1,0 +1,1 @@
+redis-cli & python run_bot.py

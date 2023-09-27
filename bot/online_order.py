@@ -40,7 +40,7 @@ async def send_file(message: Message, state: FSMContext):
     await message.copy_to(chat_id=config_dict["admin_id"], reply_markup=get_online_order_kb())
 
 
-@router.message(F.text.lower() == "Cделать заказ")
+@router.message(F.text.lower() == "cделать заказ")
 async def state_clear(message: Message, state: FSMContext):
     await message.answer("""
 Заказ отправлен, вам напишут, когда его забрать.
