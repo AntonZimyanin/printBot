@@ -14,7 +14,6 @@ from bot import check_print
 from bot import user_bot
 from bot import online_order
 from bot import commands_answer
-from bot.bot_object import bot
 from bot.filters.chat_type import ChatTypeFilter
 from bot.commands import set_bot_commands
 from bot.config_data import config_dict
@@ -31,7 +30,7 @@ class Redis(BaseModel):
     data_db_id: int
 
 
-async def main(bot: Bot):
+async def main():
 
     asyncio.get_running_loop()
 
@@ -49,6 +48,7 @@ async def main(bot: Bot):
         )
 
     dp = Dispatcher(storage=storage)
+    bot = Bot(config_dict["bot_token"])
 
     check_print.router.message.filter(ChatTypeFilter(chat_type=["group", "supergroup"]))
     user_bot.router.message.filter(ChatTypeFilter(chat_type=["private"]))
@@ -71,4 +71,4 @@ async def main(bot: Bot):
 
 
 if __name__ == "__main__":
-    asyncio.run(main(bot=bot))
+    asyncio.run(main())

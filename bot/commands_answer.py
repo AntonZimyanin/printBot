@@ -7,7 +7,6 @@ from bot.keyboards.user_kb import get_user_kb
 from bot.keyboards.print_type_kb import get_print_type_kb
 
 
-
 router = Router(name="user-commands")
 
 

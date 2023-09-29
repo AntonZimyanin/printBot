@@ -3,7 +3,6 @@ from aiogram import Router
 from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
-from bot.bot_object import bot
 from bot.config_data import config_dict
 from bot.keyboards.print_type_kb import get_print_type_kb
 from bot.keyboards.make_order_kb import get_online_order_kb
@@ -28,7 +27,7 @@ async def send_print_type(callback: CallbackQuery, state: FSMContext):
 """)
 
     #admin message
-    await bot.send_message(chat_id=config_dict["admin_id"]
+    await callback.bot.send_message(chat_id=config_dict["admin_id"]
                             , text=f"""{callback.data} — @{callback.from_user.username}""")
     
 
