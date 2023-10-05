@@ -1,0 +1,7 @@
+version: '3'
+services:
+    bot:
+        image: print-bot
+        stop_signal: SIGINT
+        restart: unless-stopped
+

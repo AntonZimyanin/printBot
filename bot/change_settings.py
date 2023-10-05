@@ -1,8 +1,8 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from bot.config_data import config_data
+from bot.config_data import config_dict
 
 
 router = Router(name="change_settings")
@@ -10,8 +10,6 @@ router = Router(name="change_settings")
 
 @router.message(Command("change_settings"))
 async def change_settings(message: Message):
-
-    config_dict = config_data("config.json")
 
     if message.from_user.id == config_dict["admin_id"]:
         """logic for change json data"""
