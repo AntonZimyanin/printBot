@@ -39,15 +39,14 @@ async def main():
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
 
-    # if config_dict["fsm_mode"] == FSMMode.MEMORY:
-    #     storage = MemoryStorage()
-    # else:
-    #     storage = RedisStorage.from_url(
-    #         url=f"{config_dict['redis_dsn']}/{config_dict['redis_fsm_db_id']}",
-    #         connection_kwargs={"decode_responses": True},
-    #     )
+    if config_dict["fsm_mode"] == FSMMode.MEMORY:
+        storage = MemoryStorage()
+    else:
+        storage = RedisStorage.from_url(
+            url=f"{config_dict['redis_dsn']}/{config_dict['redis_fsm_db_id']}",
+            connection_kwargs={"decode_responses": True},
+        )
     
-    storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
     bot = Bot(config_dict["bot_token"], parse_mode="HTML")
 
