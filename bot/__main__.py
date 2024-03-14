@@ -6,6 +6,8 @@ from aiogram import Bot
 from aiogram import Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.enums.parse_mode import ParseMode
+from aiogram.client.bot import DefaultBotProperties
 from pydantic import BaseModel
 from pydantic import RedisDsn
 
@@ -48,7 +50,7 @@ async def main():
         )
     
     dp = Dispatcher(storage=storage)
-    bot = Bot(config_dict["bot_token"], parse_mode="HTML")
+    bot = Bot(config_dict["bot_token"], default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     check_print.router.message.filter(ChatTypeFilter(chat_type=["group", "supergroup"]))
     user_bot.router.message.filter(ChatTypeFilter(chat_type=["private"]))
@@ -68,6 +70,8 @@ async def main():
 
     except KeyboardInterrupt:
         print("\n^C\n")
+    finally:
+        await bot.session.close()
 
 
 if __name__ == "__main__":
