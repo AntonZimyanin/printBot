@@ -6,7 +6,6 @@ from aiogram import Bot
 from aiogram import Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.enums.parse_mode import ParseMode
 from aiogram.client.bot import DefaultBotProperties
 from pydantic import BaseModel
 from pydantic import RedisDsn
@@ -41,16 +40,17 @@ async def main():
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
 
-    if config_dict["fsm_mode"] == FSMMode.MEMORY:
-        storage = MemoryStorage()
-    else:
-        storage = RedisStorage.from_url(
-            url=f"{config_dict['redis_dsn']}/{config_dict['redis_fsm_db_id']}",
-            connection_kwargs={"decode_responses": True},
-        )
+    # if config_dict["fsm_mode"] == FSMMode.MEMORY:
+    #     storage = MemoryStorage()
+    # else:
+    #     storage = RedisStorage.from_url(
+    #         url=f"{config_dict['redis_dsn']}/{config_dict['redis_fsm_db_id']}",
+    #         connection_kwargs={"decode_responses": True},
+    #     )
     
+    storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
-    bot = Bot(config_dict["bot_token"], default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(config_dict["bot_token"], default=DefaultBotProperties(parse_mode="HTML"))
 
     check_print.router.message.filter(ChatTypeFilter(chat_type=["group", "supergroup"]))
     user_bot.router.message.filter(ChatTypeFilter(chat_type=["private"]))
@@ -64,12 +64,10 @@ async def main():
     dp.include_router(router=online_order.router)
     dp.include_router(router=commands_answer.router)
 
-    try:
-        await set_bot_commands(bot=bot)
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+    await set_bot_commands(bot=bot)
 
-    except KeyboardInterrupt:
-        print("\n^C\n")
+    try:
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
     finally:
         await bot.session.close()
 

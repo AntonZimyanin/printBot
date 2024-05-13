@@ -1,0 +1,14 @@
+{
+
+    "admin_id": "", 
+    "bot_token": "", 
+    "manager_name": "@kseeilax",
+    "manager_id": "",
+    "redis_dsn": "redis://localhost",
+    "redis_fsm_db_id": "0", 
+    "redis_data_db_id": "0", 
+    "fsm_mode": "redis", 
+    "observers": [ 
+        ""
+    ]
+}
