@@ -1,8 +1,8 @@
 # PrintBot
 
-Welcome to PrintBot, a Telegram bot designed to assist:
-- check messages in groups
-- create online orders 
+Welcome to PrintBot, a Telegram bot designed to provide the following services:
+- Monitor and check messages in groups
+- Facilitate the creation of online orders
 
 ## Commands
 
